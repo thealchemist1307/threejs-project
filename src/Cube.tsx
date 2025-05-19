@@ -1,6 +1,5 @@
 import { useRef, useEffect } from "react";
 import * as THREE from "three";
-import { useFrame } from "@react-three/fiber";
 
 type Props = {
   rotation: [number, number, number];
