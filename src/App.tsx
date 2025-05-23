@@ -1,15 +1,16 @@
+import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { useState } from "react";
-import { Cube } from "./Cube";
 import { ControlPanel } from "./ControlPanel";
+import { RobotArm } from "./RobotArm";
 
 function App() {
   const [rotation, setRotation] = useState<[number, number, number]>([0, 0, 0]);
 
   const handleRotate = (dir: "left" | "right" | "up" | "down") => {
     setRotation(([x, y, z]) => {
-      const step = Math.PI / 8; // 22.5° per step
+      const step = Math.PI / 8;
       switch (dir) {
         case "up":
           return [x - step, y, z];
@@ -28,9 +29,21 @@ function App() {
   return (
     <>
       <Canvas style={{ width: "100vw", height: "100vh" }}>
-        <ambientLight />
-        <pointLight position={[10, 10, 10]} />
-        <Cube rotation={rotation} />
+        <ambientLight intensity={0.6} />
+        <hemisphereLight
+          color={0xffffff}
+          groundColor={0x444444}
+          intensity={0.8}
+        />
+        <directionalLight position={[5, 10, 7.5]} intensity={1.2} castShadow />
+        <directionalLight position={[-5, 10, -7.5]} intensity={0.8} />
+
+        <Suspense fallback={null}>
+          <group rotation={rotation}>
+            <RobotArm />
+          </group>
+        </Suspense>
+
         <OrbitControls />
       </Canvas>
       <ControlPanel onRotate={handleRotate} />
