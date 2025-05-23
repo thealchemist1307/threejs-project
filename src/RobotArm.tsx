@@ -1,8 +1,6 @@
-import React, { useEffect, useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useGLTF } from "@react-three/drei";
 import { useControls } from "leva";
-import * as THREE from "three";
-
 export const RobotArm = () => {
   const { scene } = useGLTF("/assets/robot_arm.glb") as any;
 
